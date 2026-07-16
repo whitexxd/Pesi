@@ -203,9 +203,8 @@ export default function TournamentsPage() {
         </div>
       )}
 
-      {showCreate && player && (
+      {showCreate && (
         <CreateTournamentModal
-          playerId={player.id}
           onClose={() => setShowCreate(false)}
           onCreated={() => {
             setShowCreate(false);
@@ -249,11 +248,9 @@ function AdminTournamentControls({
 }
 
 function CreateTournamentModal({
-  playerId,
   onClose,
   onCreated,
 }: {
-  playerId: string;
   onClose: () => void;
   onCreated: () => void;
 }) {
@@ -270,14 +267,14 @@ function CreateTournamentModal({
     setError('');
     try {
       await createTournament({
-        name,
-        description,
+        name: name.trim(),
+        description: description.trim(),
         max_players: maxPlayers,
         start_date: startDate || null,
-        created_by: playerId,
       });
       onCreated();
     } catch (err) {
+      console.error('Failed to create tournament:', err);
       setError(err instanceof Error ? err.message : 'Failed to create tournament');
     } finally {
       setBusy(false);

@@ -262,10 +262,9 @@ function CreateMatchModal({
     try {
       await createMatch({
         tournament_id: tournamentId,
-        round,
         player1_id: p1,
         player2_id: p2,
-        scheduled_at: null,
+        round,
       });
       onCreated();
     } catch (err) {

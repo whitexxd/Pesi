@@ -68,7 +68,7 @@ export async function fetchTournaments(): Promise<Tournament[]> {
 }
 
 export async function createTournament(
-  payload: Pick<Tournament, 'name' | 'description' | 'max_players' | 'start_date'> & { created_by: string },
+  payload: { name: string; description?: string; max_players?: number; start_date?: string | null },
 ): Promise<Tournament> {
   const { data, error } = await supabase
     .from('tournaments')
@@ -152,7 +152,7 @@ export async function fetchMatches(tournamentId: string): Promise<Match[]> {
 }
 
 export async function createMatch(
-  payload: Pick<Match, 'tournament_id' | 'round' | 'player1_id' | 'player2_id' | 'scheduled_at'>,
+  payload: { tournament_id: string; player1_id: string; player2_id: string; round?: number },
 ): Promise<Match> {
   const { data, error } = await supabase
     .from('matches')
